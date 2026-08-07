@@ -4,3 +4,6 @@ mlruns/
 .pytest_cache/
 *.pyc
 .ipynb_checkpoints/
+mlflow.db*
+models/*.pkl
+
