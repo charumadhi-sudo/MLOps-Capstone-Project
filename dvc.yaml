@@ -1,0 +1,11 @@
+stages:
+  train:
+    cmd: python -m src.train
+    deps:
+      - src/train.py
+      - src/utils.py
+      - data/winequality-red.csv
+    outs:
+      - models/best_model.pkl
+      - models/scaler.pkl
+      - models/feature_names.pkl
