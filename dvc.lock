@@ -1,0 +1,30 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python -m src.train
+    deps:
+    - path: data/winequality-red.csv
+      hash: md5
+      md5: 2daeecee174368f8a33b82c8cccae3a5
+      size: 84199
+    - path: src/train.py
+      hash: md5
+      md5: c5080d9e4190b3e4f05f36fe89a7ed4e
+      size: 4442
+    - path: src/utils.py
+      hash: md5
+      md5: d7e9db00d9ba591a5520072650163958
+      size: 2381
+    outs:
+    - path: models/best_model.pkl
+      hash: md5
+      md5: e1e56a89342bae21f0456f339d31bf52
+      size: 2099620
+    - path: models/feature_names.pkl
+      hash: md5
+      md5: 26c0ca8dc73dd1b9896e3338237ef30a
+      size: 176
+    - path: models/scaler.pkl
+      hash: md5
+      md5: f0ac516cd2ee6f21c0c7932fa7e241c7
+      size: 927
