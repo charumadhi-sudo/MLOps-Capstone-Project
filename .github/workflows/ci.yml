@@ -34,6 +34,12 @@ jobs:
       run: |
         python -m pytest
 
+    - name: Upload models artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: trained-models
+        path: models/
+
   build-docker:
     needs: test
     runs-on: ubuntu-latest
@@ -41,6 +47,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Download models artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: trained-models
+        path: models/
 
     - name: Build Docker image
       run: |
