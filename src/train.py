@@ -1,5 +1,6 @@
 import os
 import pickle
+from typing import Any, Dict, List
 import numpy as np
 import mlflow
 import mlflow.sklearn
@@ -20,7 +21,7 @@ def train_and_track():
     X_train, X_test, y_train, y_test, scaler, feature_names = load_and_preprocess_data()
     
     # Define the 3 models we want to train
-    models_config = [
+    models_config: List[Dict[str, Any]] = [
         {
             "name": "LogisticRegression",
             "model_class": LogisticRegression,
@@ -38,10 +39,10 @@ def train_and_track():
         }
     ]
     
-    best_f1 = -1.0
-    best_model_run_id = None
-    best_model_name = None
-    best_model_obj = None
+    best_f1: float = -1.0
+    best_model_run_id: Any = None
+    best_model_name: Any = None
+    best_model_obj: Any = None
     
     for config in models_config:
         model_name = config["name"]

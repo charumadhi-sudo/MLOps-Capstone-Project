@@ -1,11 +1,13 @@
 import os
 import pickle
+from typing import Any, Dict
 import numpy as np
+import pandas as pd
 
 # Global variables for model, scaler, and features
-_MODEL = None
-_SCALER = None
-_FEATURE_NAMES = None
+_MODEL: Any = None
+_SCALER: Any = None
+_FEATURE_NAMES: Any = None
 
 def load_artifacts():
     """Loads the model and scaler from the models directory."""
@@ -31,7 +33,7 @@ def load_artifacts():
     with open(feature_path, "rb") as f:
         _FEATURE_NAMES = pickle.load(f)
 
-def predict_single(features_dict):
+def predict_single(features_dict: Dict[str, Any]) -> Dict[str, Any]:
     """
     Makes a prediction on a single sample represented as a dictionary.
     Keys must match the feature names.
@@ -50,9 +52,9 @@ def predict_single(features_dict):
         except KeyError as e_inner:
             raise ValueError(f"Missing required feature: {e_inner}. Expected features: {_FEATURE_NAMES}")
             
-    # Reshape and scale
-    features_arr = np.array(features_list).reshape(1, -1)
-    features_scaled = _SCALER.transform(features_arr)
+    # Reshape and scale using DataFrame to keep feature names and avoid warnings
+    features_df = pd.DataFrame([features_list], columns=_FEATURE_NAMES)
+    features_scaled = _SCALER.transform(features_df)
     
     # Predict
     prediction = int(_MODEL.predict(features_scaled)[0])
@@ -70,6 +72,6 @@ def predict_single(features_dict):
         "label": "Good Quality" if prediction == 1 else "Poor Quality"
     }
 
-def get_feature_names():
+def get_feature_names() -> Any:
     load_artifacts()
     return _FEATURE_NAMES
